@@ -8,14 +8,14 @@ function getRandomNumber() {
     return Math.floor(Math.random() * 100) + 1;
 }
 
-let randomNum = getRandomNumber()
+let randomNumber = getRandomNumber()
 
 
 const MAX_ATTEMPTS = 5;
 
 
 export default function NumberGuessingGame() {
-    const [numberToGuess, setNumberToGuess] = useState(randomNum)
+    const [numberToGuess, setNumberToGuess] = useState(randomNumber)
     const [numberOfGuesses, setNumberOfGuesses] = useState(0)
     const [latestGuess, setLatestGuess] = useState(null)
     const [isCorrectGuess, setIsCorrectGuess] = useState(false)
