@@ -1,29 +1,33 @@
 import React, { useState } from "react";
 import Button from "./Button";
 
-const GuessControl = ({onGuess}) => {
+const GuessControl = ({ onGuess }) => {
     const [currentGuess, setCurrentGuess] = useState("");
 
-  const handleInputChange = (e) => {
-    setCurrentGuess(e.target.value);
-  }
+    const handleInputChange = (e) => {
+        setCurrentGuess(e.target.value);
+    };
 
-  const onSubmitGuess = () => {
-    onGuess(Number(currentGuess));
-    setCurrentGuess("");
-  }
+    const onSubmitGuess = (e) => {
+        e.preventDefault(); // prevent form submission
+        onGuess(Number(currentGuess));
+        setCurrentGuess("");
+    };
 
     return (
-      <div>
-        <input
-          type="number"
-          value={currentGuess}
-          onChange={handleInputChange}
-        />
-        <Button onClick={onSubmitGuess}>Submit Guess</Button>
-      </div>
+        <form onSubmit={onSubmitGuess}>
+            <label>
+                Guess:
+                <input
+                    type="number"
+                    value={currentGuess}
+                    onChange={handleInputChange}
+                />
+            </label>
+            <Button type="submit">Submit Guess</Button>
+        </form>
     );
-  }
-
+};
 
 export default GuessControl;
+
