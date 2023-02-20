@@ -1,47 +1,33 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 
-class GuessControl extends Component {
-  constructor(props) {
-    super(props);
+const GuessControl = ({ onGuess }) => {
+    const [currentGuess, setCurrentGuess] = useState("");
 
-    this.state = {
-      currentGuess: "",
+    const handleInputChange = (e) => {
+        setCurrentGuess(e.target.value);
     };
 
-    /**
-     * These lines are required to make the methods/functions declared on this
-     *  class have the correct `this` object when they run.
-     */
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.onSubmitGuess = this.onSubmitGuess.bind(this);
-  }
+    const onSubmitGuess = (e) => {
+        e.preventDefault(); // prevent form submission
+        onGuess(Number(currentGuess));
+        setCurrentGuess("");
+    };
 
-  handleInputChange(event) {
-    this.setState({ currentGuess: event.target.value });
-  }
-
-  onSubmitGuess() {
-    // Since the values from an HTML input are strings by default,
-    //  convert to a number for the returned guess value
-    //  by passing in the string to the Number function.
-    // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number
-    this.props.onGuess(Number(this.state.currentGuess));
-    this.setState({ currentGuess: "" });
-  }
-
-  render() {
     return (
-      <div>
-        <input
-          type="number"
-          value={this.state.currentGuess}
-          onChange={this.handleInputChange}
-        />
-        <Button onClick={this.onSubmitGuess}>Submit Guess</Button>
-      </div>
+        <form onSubmit={onSubmitGuess}>
+            <label>
+                Guess:
+                <input
+                    type="number"
+                    value={currentGuess}
+                    onChange={handleInputChange}
+                />
+            </label>
+            <Button type="submit">Submit Guess</Button>
+        </form>
     );
-  }
-}
+};
 
 export default GuessControl;
+
